@@ -13,11 +13,11 @@ const DATA = {
             "url": "",
         },
         AUTHOR_NAME: "Billy Tsouvalas",
-        VIDEO_SRC: "video/...",
     },
     ABSTRACT: {
         TEXT: [
-            "Containers are the dominant packaging technology for modern software, with public registries distributing tens of millions of images that power everything from individual projects to global cloud infrastructure. A well-documented consequence of this scale is the widespread leakage of secrets, with developer oversight and AI-assisted software generation resulting in the unintentional exposure of live API keys, SSH credentials, and database passwords within published image layers. Despite substantial prior work characterizing the prevalence of these leaks, the malicious ecosystem that systematically scans public container registries in order to extract these secrets has remained largely unobserved. In a two-round, IRB-approved study, we conduct the first large-scale, in-the-wild measurement of these malicious actors, deploying 300 instrumented container images across eight public container registries over a period of four months. Each image is instrumented with enhanced monitoring capabilities, including static honeytokens (AWS, OpenAI, Claude API keys), decoy SSH and database credentials, and image lifecycle beacons, allowing us to comprehensively observe post-publication interactions with the image's embedded secrets. Our experiments reveal a coordinated, distributed adversary infrastructure operating on public container registries that extracts and exploits embedded secrets as quickly as 8 seconds after an image’s publication. In aggregate, our AWS keys received over 140,000 API calls from more than 5,000 unique IP addresses, while our OpenAI and Claude keys were drained of their full account balances in short, rapid bursts of exploitation, exposing both the breadth and the aggression of the malicious bots preying on containers."
+            "Containers are the dominant packaging technology for modern software, with public registries distributing tens of millions of images that power everything from individual projects to global cloud infrastructure. A well-documented consequence of this scale is the widespread leakage of secrets, with developer oversight and AI-assisted software generation resulting in the unintentional exposure of live API keys, SSH credentials, and database passwords within published image layers.",
+            "Despite substantial prior work characterizing the prevalence of these leaks, the malicious ecosystem that systematically scans public container registries in order to extract these secrets has remained largely unobserved. In a two-round, IRB-approved study, we conduct the first large-scale, in-the-wild measurement of these malicious actors, deploying 300 instrumented container images across eight public container registries over a period of four months. Each image is instrumented with enhanced monitoring capabilities, including static honeytokens (AWS, OpenAI, Claude API keys), decoy SSH and database credentials, and image lifecycle beacons, allowing us to comprehensively observe post-publication interactions with the image's embedded secrets. Our experiments reveal a coordinated, distributed adversary infrastructure operating on public container registries that extracts and exploits embedded secrets as quickly as 8 seconds after an image's publication. In aggregate, our AWS keys received over 140,000 API calls from more than 5,000 unique IP addresses, while our OpenAI and Claude keys were drained of their full account balances in short, rapid bursts of exploitation, exposing both the breadth and the aggression of the malicious bots preying on containers."
         ],
         OVERVIEW: {
             "src": "img/overview_dummy.png",
@@ -69,19 +69,18 @@ const DATA = {
             "links": [
                 {
                     "name": "PDF",
-                    "url": "",
+                    "url": "https://dl.acm.org/doi/10.1145/3830454.3846791",
                     "icon": "img/paper_copy.svg"
                 },
             ],
         },
         {
-            "title": "Code",
+            "title": "Dataset",
             "icon": "img/code.svg",
             "links": [
                 {
-                    "name": "Repository",
-                    "url": "https://github.com/BillyPragSec",
-                    "icon": "img/GitHub-Mark-Light-32px.png"
+                    "name": "Artifact",
+                    "url": "https://doi.org/10.5281/zenodo.22739294",
                 },
                 // {
                 //     "name": "Repository 2",
@@ -92,11 +91,18 @@ const DATA = {
         },
     ],
     CITATION: ` \
-    @article{tsouvalas2026gone,
-        author    = {Tsouvalas, Billy and Nikiforakis, Nick},
-        title     = {Gone in 8 Seconds: Uncovering the Malicious Bots Operating on Public Container Registries},
-        journal   = {2026 ACM SIGSAC Conference on Computer and Communications Security (CCS ’26)},
-        year      = {2026}
+    @inproceedings{tsouvalasgonein8,
+        author = {Tsouvalas, Billy and Nikiforakis, Nick},
+        title = {Gone in 8 Seconds: Uncovering Malicious Bots Operating on Public Container Registries},
+        year = {2026},
+        publisher = {Association for Computing Machinery},
+        address = {New York, NY, USA},
+        url = {https://doi.org/10.1145/3830454.3846791},
+        doi = {10.1145/3830454.3846791},
+        booktitle = {Proceedings of the 2026 ACM SIGSAC Conference on Computer and Communications Security},
+        pages = {970–984},
+        numpages = {15},
+        series = {CCS '26}
     }`,
     FOOTER: {
         LOGOS: [
@@ -172,14 +178,6 @@ function displayNav() {
             <a class="nav-link active" href="#${link.id}">${link.name}</a>
         </li>
     `).join("");
-}
-
-/* Video section */
-function displayVideo() {
-    document.getElementById("video").innerHTML = `<video class="embed-responsive-item" controls autoplay loop muted><source src=${DATA.HEAD.VIDEO_SRC} type="video/mp4"></video>`;
-    // let vid_element = document.getElementById("video");
-    // vid_element.loop = true;
-    // vid_element.load();
 }
 
 /* Abstract section */
@@ -260,7 +258,7 @@ function displayContributors() {
 /* Links section */
 function formatLink(_link) {
     return `<div class="col-sm text-center">
-            ${link(_link.url, `<img src=${_link.icon} width="20px"> ${_link.name}`, `role="button" class="btn btn-dark"  style="background-color:#210d47;"`)}
+            ${link(_link.url, `${_link.icon ? `<img src=${_link.icon} width="20px"> ` : ``}${_link.name}`, `role="button" class="btn btn-dark"  style="background-color:#210d47;"`)}
         </div>`;
 }
 
@@ -318,7 +316,6 @@ function displayPage() {
     displayTitle();
     displayNav();
     displayAbstract();
-    displayVideo();
     //displayOverview();
     displayContentSections();
     displayContributors();
